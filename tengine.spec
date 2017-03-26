@@ -1,13 +1,13 @@
 Name:       tengine
 Version:    2.1.2
 Release:    1
-Vendor:     Taobao
+#Vendor:     Taobao
 Summary:    GUN Tengine X86_64
 License:    GPL
 Source:     tengine-2.1.2.tar.gz
 Group:      System Enviroment/Daemons
 URL:        http://tengine.taobao.org/
-Packager:   gk.wl@qq.com
+#Packager:   gk.wl@qq.com
 %description
 Taobao tengine package
 

@@ -23,8 +23,8 @@ Source0:	http://prdownloads.sourceforge.net/openvpn/%{name}-%{version}.tar.gz
 
 License:	GPL
 Group:		Applications/Internet
-Vendor:		James Yonan <jim@yonan.net>
-Packager:	James Yonan <jim@yonan.net>
+# Vendor:		James Yonan <jim@yonan.net>
+# Packager:	James Yonan <jim@yonan.net>
 BuildRoot:	%{_tmppath}/%{name}-%(id -un)
 
 #
@@ -135,7 +135,7 @@ popd
 %__install -c -d -m 755 %{buildroot}/etc/init.d
 %__sed -e 's#openvpn=\"/usr/local/sbin/openvpn\"#openvpn=\"/usr/sbin/openvpn\"#' < suse/%{name}.init > %{_tmppath}/%{name}.init
 %__install -c -m 755 %{_tmppath}/%{name}.init %{buildroot}/etc/init.d/%{name}
-%__rm %{_tmppath}/%{name}.init 
+%__rm %{_tmppath}/%{name}.init
 %else
 %__install -c -d -m 755 %{buildroot}/etc/rc.d/init.d
 %__install -c -m 755 sample-scripts/%{name}.init %{buildroot}/etc/rc.d/init.d/%{name}
@@ -211,7 +211,7 @@ fi
 
 %files
 %defattr(-,root,root)
-%doc AUTHORS ChangeLog COPYING COPYRIGHT.GPL INSTALL NEWS PORTS README 
+%doc AUTHORS ChangeLog COPYING COPYRIGHT.GPL INSTALL NEWS PORTS README
 %{_mandir}/man8/%{name}.8*
 %{_sbindir}/%{name}
 %{_datadir}/%{name}
