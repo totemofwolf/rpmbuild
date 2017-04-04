@@ -1,9 +1,16 @@
 %define _unpackaged_files_terminate_build 0
-%define debug_package %{nil}
-
+#%define debug_package %{nil}
 Release: 1
 
-%define openssldir /var/ssl
+%define openssldir /etc/pki/tls
+# %define openssldir /var/ssl
+# OPENSSLDIR: "/etc/pki/tls"
+# engines:  rdrand dynamic
+# options:  bn(64,64) md2(int) rc4(16x,int) des(idx,cisc,16,int) idea(int) blowfish(idx)
+# compiler: gcc -fPIC -DOPENSSL_PIC -DZLIB -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -DKRB5_MIT
+# -m64 -DL_ENDIAN -DTERMIO -Wall -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2
+# -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic -Wa,--noexecstack -DPURIFY -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5
+# -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM
 
 Summary: Secure Sockets Layer and cryptography libraries and tools
 Name: openssl
