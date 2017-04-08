@@ -6,9 +6,9 @@
 Name: php
 Version: %{version}
 Release: %{release}
-Summary: PHP: Hypertext Preprocessor
-URL: http://cn2.php.net/distributions/php-%{version}.tar.gz
-Source: php-%{version}.tar.gz
+Summary: PHP Hypertext Preprocessor
+URL: http://cn2.php.net/distributions/%{name}-%{version}.tar.gz
+Source: %{name}-%{version}.tar.gz
 #BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 License:    GPL
@@ -31,9 +31,6 @@ BuildRequires: libcurl-devel
 %{?with-openssl:BuildRequires: openssl-devel >= 1.0.1e-48}
 %{?with-openssl:Requires: openssl >= 1.0.1e-48}
 
-#rpm -ivh libiconv-1.13.1-1.x86_64.rpm
-#%{!?without-iconv:BuildRequires: libiconv >= 1.13.1}
-#%{!?without-iconv:Requires:}
 
 # libgd = gd + gd-devel
 %{?with-gd:BuildRequires: libgd >= 2.2.2}
@@ -155,3 +152,7 @@ make distclean
 
 #install -Dp -m0755 sapi/fpm/init.d.php-fpm.in %{buildroot}%{_initrddir}/php-fpm
 #install -Dp -m0644 ./php.ini-production ${RPM_BUILD_ROOT}/usr/local/etc
+
+#rpm -ivh libiconv-1.13.1-1.x86_64.rpm
+#%{!?without-iconv:BuildRequires: libiconv >= 1.13.1}
+#%{!?without-iconv:Requires:}

@@ -29,9 +29,13 @@ BuildRequires: libXpm-devel
 BuildRequires: libzlib-devel
 BuildRequires: t1lib-devel
 BuildRequires: zlib
+
+#
 Requires: libXpm
 Requires: libjpeg-turbo
 Requires: libpng
+Requires: libtiff
+Requires: libfreetype
 
 %if %{with_vpx}
 BuildRequires: libvpx-devel
