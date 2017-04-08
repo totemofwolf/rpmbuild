@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 0
-%define debug_package %{nil}
+#%define debug_package %{nil}
 
 Release: 1
 

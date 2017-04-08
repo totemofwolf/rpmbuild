@@ -39,8 +39,8 @@ BuildRequires: libvpx-devel
 
 %prep
 %setup -q
-./configure --prefix=/usr/local --with-freetype --with-png --with-jpeg --with-xpm=/usr/lib64
-make %{_smp_mflags}
+./configure --prefix=/usr/local/libgd --with-freetype --with-png --with-jpeg --with-xpm=/usr/lib64
+make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -53,9 +53,13 @@ make clean
 %post
 ldconfig
 
+%postun
+ldconfig
+
+exit 0
+
 %files
 %defattr (-,root,root)
-#%doc
-/usr/local/
+/usr/local/libgd
 
 %changelog
