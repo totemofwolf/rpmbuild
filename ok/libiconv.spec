@@ -1,4 +1,4 @@
-%define version 1.13.1
+%define version 1.15
 
 Name:       libiconv
 Version:    %{version}
@@ -7,7 +7,7 @@ Summary:    GUN libiconv X86_64
 License:    GPL
 Source:     %{name}-%{version}.tar.gz
 Group:      System Enviroment/Base
-URL:        http://oss.aliyuncs.com/aliyunecs/onekey/libiconv-%{version}.tar.gz
+URL:        https://ftp.gnu.org/pub/gnu/libiconv/libiconv-%{version}.tar.gz
 
 #
 # Description
@@ -26,7 +26,12 @@ Libiconv package
 
 %prep
 %setup -q
-./configure --prefix=/usr/local
+./configure \
+  --build=x86_64-redhat-linux-gnu \
+  --host=x86_64-redhat-linux-gnu \
+  --target=x86_64-redhat-linux-gnu \
+  --prefix=/usr/local
+
 make %{?_smp_mflags}
 
 #

@@ -53,6 +53,9 @@ developers to write dynamically generated pages quickly.
 %setup -q -n %{name}-%{version}
 %build
 ./configure \
+  --build=x86_64-redhat-linux-gnu \
+  --host=x86_64-redhat-linux-gnu \
+  --target=x86_64-redhat-linux-gnu \
   --prefix=/production/server/php \
   --with-config-file-path=/production/server/php/etc \
   --with-config-file-scan-dir=/production/server/php/etc/php.d \
@@ -81,7 +84,7 @@ developers to write dynamically generated pages quickly.
   --enable-xml \
   --enable-zip \
   --with-curl \
-  --with-gd=/usr/local/libgd \
+  --with-gd=/usr \
   --with-jpeg-dir \
   --with-freetype-dir \
   --with-xpm-dir \

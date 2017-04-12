@@ -51,7 +51,6 @@ Taobao tengine package
 %setup -q
 ./configure \
   --prefix=/production/server/nginx \
-  --pid-path=/var/run/nginx.pid \
   --with-cc-opt='-O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2' \
   --with-ld-opt='-Wl,-Bsymbolic-functions -Wl,-z,relro' \
   --user=www \
@@ -75,19 +74,27 @@ Taobao tengine package
   --without-mail_smtp_module \
   --with-cpu-opt=opteron
 
-#--with-pcre-jit \
-#--with-cpu-opt=opteron \
-#--with-http_spdy_module replaced by httpv2
+# --pid-path=/var/run/nginx.pid \
+# --with-pcre-jit \
+# --with-cpu-opt=opteron \
+# --with-http_spdy_module replaced by httpv2
 
-#--with-http_lua_module \
+# --with-http_lua_module \
 # export LUAJIT_LIB=/usr/local/lib
 # export LUAJIT_INC=/usr/local/include/luajit-2.0
 # make clean; CC=clang; CFLAGS="-g -O0" ./configure --prefix=$PWD/out --enable-mods-static=all --with-ld-opt="-Wl,-rpath,/usr/local/lib" --with-debug --with-http_upstream_check_module --with-http_v2_module --with-http_dyups_module --with-http_dyups_lua_api --with-http_sysguard_module --add-module=/home/lhanjian/ali/tengine_now/ngx_devel_kit-master && make -j4
 
 make %{?_smp_mflags}
 
+
+#
+# Installation section
+#
+
 %install
-make DESTDIR=$RPM_BUILD_ROOT install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
+
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf "$RPM_BUILD_ROOT"

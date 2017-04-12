@@ -59,10 +59,12 @@ BuildRequires: libcurl-devel
 %setup -q -n %{name}-%{version}
 %build
 ./configure \
+  --build=x86_64-redhat-linux-gnu \
+  --host=x86_64-redhat-linux-gnu \
+  --target=x86_64-redhat-linux-gnu \
   --prefix=%{php_install_dir} \
   --with-config-file-path=%{php_install_dir}/etc \
   --with-config-file-scan-dir=%{php_install_dir}/etc/php.d \
-  --build=x86_64-redhat-linux \
   --disable-debug \
   --disable-fileinfo \
   --disable-ipv6 \
@@ -87,7 +89,7 @@ BuildRequires: libcurl-devel
   --enable-xml \
   --enable-zip \
   --with-curl \
-  --with-gd=/usr/local/libgd \
+  --with-gd=/usr \
   --with-gettext \
   --with-iconv \
   --with-libxml-dir=/usr \
