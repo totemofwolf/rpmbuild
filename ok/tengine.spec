@@ -41,6 +41,7 @@ Requires: libXau
 Requires: libjpeg-turbo
 Requires: libpng
 Requires: libxcb
+Requires: fontconfig
 
 %description
 Taobao tengine package
@@ -95,6 +96,8 @@ make %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 
+# Install link
+# %__install -c -d -m 755 %{buildroot}/production/server/tengine-2.1.2
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf "$RPM_BUILD_ROOT"
@@ -103,9 +106,12 @@ make clean
 %pre
 grep -q ^%{_group}: /etc/group || /usr/sbin/groupadd %{_group}
 grep -q ^%{_user}: /etc/passwd || /usr/sbin/useradd -g %{_group} -M -s /sbin/nologin -M %{_user}
+# rm -fv /production/server/nginx
+# ln -sf /production/server/tengine-2.1.2 /production/server/nginx
 
 %files
 %defattr (-,root,root)
 /production/server/nginx
+# /production/server/tengine-2.1.2
 
 %changelog

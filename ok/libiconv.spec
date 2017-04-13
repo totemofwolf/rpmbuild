@@ -26,13 +26,21 @@ Libiconv package
 
 %prep
 %setup -q
+
 ./configure \
-  --build=x86_64-redhat-linux-gnu \
-  --host=x86_64-redhat-linux-gnu \
-  --target=x86_64-redhat-linux-gnu \
-  --prefix=/usr/local
+  --prefix=/usr/local \
+  --bindir=/usr/local/bin \
+  --includedir=/usr/local/include \
+  --datarootdir=/usr/local/share \
+  --libdir=/usr/lib64
+
+# ./libtool --finish /usr/lib64
 
 make %{?_smp_mflags}
+
+# --build=x86_64-redhat-linux-gnu \
+# --host=x86_64-redhat-linux-gnu \
+# --target=x86_64-redhat-linux-gnu \
 
 #
 # Installation section
@@ -58,6 +66,11 @@ ldconfig
 
 %files
 %defattr(-,root,root)
-/usr/local
+/usr
+#/usr/local
+#/usr/bin
+#/usr/include
+#/usr/lib64
+#/usr/local/share
 
 %changelog

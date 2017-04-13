@@ -3,6 +3,8 @@
 %define version 5.5.38
 %define release 1
 
+%define php_install_dir /production/server/php
+
 Name: php
 Version: %{version}
 Release: %{release}
@@ -51,14 +53,12 @@ developers to write dynamically generated pages quickly.
 
 %prep
 %setup -q -n %{name}-%{version}
+
 %build
 ./configure \
-  --build=x86_64-redhat-linux-gnu \
-  --host=x86_64-redhat-linux-gnu \
-  --target=x86_64-redhat-linux-gnu \
-  --prefix=/production/server/php \
-  --with-config-file-path=/production/server/php/etc \
-  --with-config-file-scan-dir=/production/server/php/etc/php.d \
+  --prefix=%{php_install_dir} \
+  --with-config-file-path=%{php_install_dir}/etc \
+  --with-config-file-scan-dir=%{php_install_dir}/etc/php.d \
   --disable-debug \
   --disable-fileinfo \
   --disable-ipv6 \
@@ -104,6 +104,14 @@ developers to write dynamically generated pages quickly.
 
 make ZEND_EXTRA_LIBS='-liconv' %{_smp_mflags}
 
+# --target=x86_64-redhat-linux-gnu \
+# --build=x86_64-redhat-linux-gnu \
+# --host=x86_64-redhat-linux-gnu \
+# --
+# checking build system type... x86_64-unknown-linux-gnu
+# checking host system type... x86_64-unknown-linux-gnu
+# checking target system type... x86_64-unknown-linux-gnu
+
 #
 # Installation section
 #
@@ -111,6 +119,13 @@ make ZEND_EXTRA_LIBS='-liconv' %{_smp_mflags}
 %install
 mkdir -pv %{buildroot}%{_initrddir}
 %{__make} install INSTALL_ROOT="%{buildroot}"
+
+# Install init script
+%__install -c -d -m 755 %{buildroot}/etc/init.d
+%__install -c -m 755 sapi/fpm/init.d.php-fpm %{buildroot}/etc/init.d/php-fpm
+# sapi/fpm/php-fpm.service
+%__install -c -d -m 755 %{buildroot}/production/server/php/etc
+%__install -c -m 644 php.ini-production %{buildroot}/production/server/php/etc/php.ini-production
 
 #
 # Clean section
@@ -121,12 +136,24 @@ mkdir -pv %{buildroot}%{_initrddir}
 make distclean
 
 #
+# Handle the init script
+#
+
+%post
+/sbin/chkconfig --add php-fpm
+
+%preun
+/etc/init.d/php-fpm stop
+/sbin/chkconfig --del php-fpm
+
+#
 # Files section
 #
 
 %files
 %defattr(-,root,root,-)
-/production/server/php/
+%{php_install_dir}
+/etc/init.d/php-fpm
 
 # -----
 #%{_bindir}/*
@@ -135,27 +162,22 @@ make distclean
 #%{_libdir}/*
 #%{_datadir}/*
 #%{_initrddir}/*
-
 #%post
 #%/sbin/chkconfig --add php-fpm
 #%/sbin/chkconfig --level 2345 php-fpm on
-
 #%preun
 #if [ "$1" = 0 ] ; then
 #    /sbin/service php-fpm stop > /dev/null 2>&1
 #    /sbin/chkconfig --del php-fpm
 #fi
 #exit 0
-
 #%postun
 #if [ "$1" -ge 1 ]; then
 #    /sbin/service php-fpm condrestart > /dev/null 2>&1
 #fi
 #exit 0
-
 #install -Dp -m0755 sapi/fpm/init.d.php-fpm.in %{buildroot}%{_initrddir}/php-fpm
 #install -Dp -m0644 ./php.ini-production ${RPM_BUILD_ROOT}/usr/local/etc
-
 #rpm -ivh libiconv-1.13.1-1.x86_64.rpm
 #%{!?without-iconv:BuildRequires: libiconv >= 1.13.1}
 #%{!?without-iconv:Requires:}

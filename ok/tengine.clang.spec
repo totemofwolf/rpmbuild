@@ -41,6 +41,7 @@ Requires: libXau
 Requires: libjpeg-turbo
 Requires: libpng
 Requires: libxcb
+Requires: fontconfig
 
 %description
 Taobao tengine package

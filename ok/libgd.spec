@@ -40,17 +40,22 @@ BuildRequires: libvpx-devel
 
 %prep
 %setup -q
+
 ./configure \
-  --build=x86_64-redhat-linux-gnu \
-  --host=x86_64-redhat-linux-gnu \
-  --target=x86_64-redhat-linux-gnu \
   --prefix=/usr \
   --bindir=/usr/bin \
   --includedir=/usr/include \
   --libdir=/usr/lib64 \
-  --with-freetype --with-png --with-jpeg --with-xpm=/usr/lib64
+  --with-freetype \
+  --with-png \
+  --with-jpeg \
+  --with-xpm=/usr/lib64
 
 make %{?_smp_mflags}
+
+# --target=x86_64-redhat-linux-gnu \
+# --build=x86_64-redhat-linux-gnu \
+# --host=x86_64-redhat-linux-gnu \
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -71,8 +76,8 @@ exit 0
 %files
 %defattr (-,root,root)
 /usr
-/usr/bin
-/usr/include
-/usr/lib64
+#/usr/bin
+#/usr/include
+#/usr/lib64
 
 %changelog
