@@ -28,14 +28,11 @@ BuildRequires: freetype-devel
 BuildRequires: libXpm-devel
 BuildRequires: libzlib-devel
 BuildRequires: t1lib-devel
-BuildRequires: zlib
 
-#
+Requires: zlib
 Requires: libXpm
 Requires: libjpeg-turbo
 Requires: libpng
-Requires: libtiff
-Requires: libfreetype
 
 %if %{with_vpx}
 BuildRequires: libvpx-devel
@@ -43,8 +40,22 @@ BuildRequires: libvpx-devel
 
 %prep
 %setup -q
-./configure --prefix=/usr/local/libgd --with-freetype --with-png --with-jpeg --with-xpm=/usr/lib64
+
+./configure \
+  --prefix=/usr \
+  --bindir=/usr/bin \
+  --includedir=/usr/include \
+  --libdir=/usr/lib64 \
+  --with-freetype \
+  --with-png \
+  --with-jpeg \
+  --with-xpm=/usr/lib64
+
 make %{?_smp_mflags}
+
+# --target=x86_64-redhat-linux-gnu \
+# --build=x86_64-redhat-linux-gnu \
+# --host=x86_64-redhat-linux-gnu \
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -64,6 +75,9 @@ exit 0
 
 %files
 %defattr (-,root,root)
-/usr/local/libgd
+/usr
+#/usr/bin
+#/usr/include
+#/usr/lib64
 
 %changelog
